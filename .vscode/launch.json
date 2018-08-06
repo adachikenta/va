@@ -1,0 +1,33 @@
+{
+    // See https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+    // for the documentation about the launch.json format
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/program.exe",
+            "args": [
+                "arg1",
+                "arg2",
+                "arg3",
+                "arg4",
+                "arg5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

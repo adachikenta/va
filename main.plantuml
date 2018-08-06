@@ -1,0 +1,11 @@
+@startuml main
+:引数の数, 引数文字列の配列}
+start
+repeat
+  :標準出力：各引数文字列|
+repeat while (引数の数分ループ)
+stop
+note right
+  プログラム終了コード返却
+end note
+@enduml

@@ -1,0 +1,17 @@
+@startuml version
+:ツール１, ツール２, …}
+start
+repeat
+  :標準出力：ツールの場所|
+  :標準出力：ツールの version|
+  note right
+    バージョン情報の先頭行のみ表示
+    ＋行頭にインデントを追加
+    ＋行末に空行用の改行を追加
+  end note
+repeat while (引数指定のツール数分ループ)
+stop
+note right
+  プログラム終了コード返却
+end note
+@enduml

@@ -1,0 +1,83 @@
+@startuml enviroment
+skinparam frame {
+	backgroundColor<<msys>> honeydew
+	backgroundColor<<MinGW>> lightcyan
+}
+skinparam node {
+	backgroundColor ivory
+}
+node "Project" <<workspace root folder>> {
+  folder ".vscode" {
+    frame "launch.json" {
+      [run]
+      note left of [run]
+        =Debug
+        =[F5]
+      end note
+    }
+    frame "tasks.json" {
+      [build]
+      note right of [build]
+        =Build
+        =[Ctrl]+[Shift]+[B]
+        => select target
+      end note
+    }
+  }
+  frame "Makefile" {
+    node targets {
+      [all:]
+      [dump:]
+      [clean:]
+      [version:]
+    }
+  }
+  frame "version.sh" {
+    [--version]
+  }
+}
+frame "make.exe" <<msys>> {
+  [make]
+}
+frame "gcc.exe" <<MinGW>> {
+  [compile]
+}
+frame "objdump.exe" <<MinGW>> {
+  [discompile]
+}
+frame "rm.exe" <<msys>> {
+  [delete]
+}
+frame "gdb.exe" <<MinGW>> {
+  [debug]
+}
+
+node "output" <<workspace root folder>> {
+  frame "program.exe" {
+    [binary] <<->> [debug info] #gray
+  }
+  folder "reverse"{
+    frame "program.dasm" {
+      [disassembler]
+    }
+  }
+}
+
+[build] .. Makefile #ivory
+[build] ->> [make] #black
+  [make] -->> Makefile #black
+    [all:] -->> [compile] #black
+      [compile] --> program.exe #blue
+    [dump:] -->> [discompile] #black
+      [discompile] ->> [binary] #black
+      [discompile] --> reverse #blue
+    [clean:] -->> [delete] #black
+      [delete] --> output
+    [version:] -->> [--version] #black
+      [--version] -->> gcc.exe #gray
+      [--version] -->> objdump.exe #gray
+      [--version] -->> rm.exe #gray
+      [--version] ->> gdb.exe #gray
+[run] -->> [debug] #black
+  [debug] ->> [debug info] #black
+@enduml
